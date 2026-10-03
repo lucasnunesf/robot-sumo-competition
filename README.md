@@ -51,6 +51,4 @@ ESP32, two motors driven by ESCs, two digital opponent sensors, two analog edge 
 
 Work in progress. Projects 01 and 02 are rewrites of code that ran on the robot. Project 03 adds new tactics that are still to be tuned on the ring.
 
-## Author
 
-Lucas Fernandes Nunes · [LinkedIn](https://linkedin.com/in/lucas-fernandes-nunes-335867256) · [Portfolio](https://lucasdata.notion.site/)
