@@ -37,6 +37,8 @@ struct StrategyOptions {
 // Match strategy as an explicit state machine.
 //
 // Priority on every update: stay in the ring, then attack, then search.
+// Exception: while attacking with both opponent sensors locked on, the edge
+// does not stop the push (see Strategy::update).
 // No hardware access and no blocking calls: it receives sensor readings and
 // the current time and returns a motor command, so it can be unit-tested on
 // a PC (see test/).

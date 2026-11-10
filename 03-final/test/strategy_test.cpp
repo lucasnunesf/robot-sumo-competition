@@ -15,8 +15,10 @@ using State = Strategy::State;
 namespace {
 
 int failures = 0;
+int checks = 0;
 
 void check(bool ok, const char* what, int line) {
+  ++checks;
   if (!ok) {
     std::printf("FAIL (line %d): %s\n", line, what);
     ++failures;
@@ -99,11 +101,54 @@ void searchFollowsLastSeenSide() {
 
 void edgeOverridesAttack() {
   Strategy s = started(Tactic::Counter, Side::Right);
-  s.update(kOpponentAhead, 0);
-  SensorReadings pushingOverEdge = kOpponentAhead;
-  pushingOverEdge.edgeLeft = true;
-  CHECK(s.update(pushingOverEdge, 10) == kReverse);
+  s.update(kOpponentLeft, 0);
+  SensorReadings halfOnOpponent = kOpponentLeft;  // only one sensor on it
+  halfOnOpponent.edgeLeft = true;
+  CHECK(s.update(halfOnOpponent, 10) == kReverse);
   CHECK(s.state() == State::EscapeReverse);
+}
+
+void pushThroughEdgeWhenLockedOn() {
+  Strategy s = started(Tactic::Counter, Side::Right);
+  s.update(kOpponentAhead, 0);
+  SensorReadings opponentGoingOut = kOpponentAhead;
+  opponentGoingOut.edgeLeft = true;
+  opponentGoingOut.edgeRight = true;
+  CHECK(s.update(opponentGoingOut, 10) == kPush);
+  CHECK(s.state() == State::Attack);
+}
+
+void edgeWinsWhenNotYetAttacking() {
+  // Seeing the opponent and the edge in the same reading, from search:
+  // there is no push under way, so the edge still comes first.
+  Strategy s = started(Tactic::Counter, Side::Right);
+  SensorReadings both = kOpponentAhead;
+  both.edgeRight = true;
+  CHECK(s.update(both, 0) == kReverse);
+}
+
+void rightEdgeTurnsLeft() {
+  Strategy s = started(Tactic::Counter, Side::Right);
+  s.update(SensorReadings{false, true, false, false}, 0);
+  CHECK(s.update(kNothing, kEscapeReverseMs) == kTurnLeft);
+}
+
+void edgeInterruptsOpening() {
+  Strategy s = started(Tactic::Flank, Side::Right);
+  s.update(kNothing, 0);
+  CHECK(s.update(kEdgeLeft, 50) == kReverse);
+  s.update(kNothing, 50 + kEscapeReverseMs);
+  // after the escape the robot searches; the opening is not resumed
+  CHECK(s.update(kNothing, 50 + kEscapeReverseMs + kEscapeTurnMs) == kSweepRight);
+  CHECK(s.state() == State::Search);
+}
+
+void secondMatchStartsClean() {
+  Strategy s = started(Tactic::Radar, Side::Left);
+  s.update(kEdgeBoth, 0);  // first match ends mid-escape
+  s.start(5000);
+  CHECK(s.state() == State::Opening);
+  CHECK(s.update(kNothing, 5000) == kDash);
 }
 
 void escapeReversesThenTurnsAway() {
@@ -154,15 +199,20 @@ int main() {
   attackSteersTowardOpponent();
   searchFollowsLastSeenSide();
   edgeOverridesAttack();
+  pushThroughEdgeWhenLockedOn();
+  edgeWinsWhenNotYetAttacking();
+  rightEdgeTurnsLeft();
+  edgeInterruptsOpening();
+  secondMatchStartsClean();
   escapeReversesThenTurnsAway();
   bothEdgesTurnTowardLastSeen();
   opponentInterruptsEscapeTurn();
   timingSurvivesMillisWrap();
 
   if (failures == 0) {
-    std::puts("All strategy tests passed.");
+    std::printf("All strategy tests passed (%d checks).\n", checks);
     return EXIT_SUCCESS;
   }
-  std::printf("%d check(s) failed.\n", failures);
+  std::printf("%d of %d checks failed.\n", failures, checks);
   return EXIT_FAILURE;
 }

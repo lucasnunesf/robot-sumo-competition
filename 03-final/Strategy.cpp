@@ -57,8 +57,14 @@ MotorCommand Strategy::update(const SensorReadings& in, uint32_t nowMs) {
   const bool edge = in.edgeLeft || in.edgeRight;
   const bool opponent = in.opponentLeft || in.opponentRight;
 
-  // 1. Staying in the ring comes first, in every state.
-  if (edge) {
+  // 1. Staying in the ring comes first, in every state, with one exception:
+  // while pushing with both opponent sensors locked on, the opponent is
+  // between the robot and the border, so a front edge sensor seeing white
+  // means the opponent is going out, not us. Backing off there gave away
+  // pushes that were about to win (found with the simulator in sim/).
+  const bool lockedOn = in.opponentLeft && in.opponentRight;
+  const bool pushingOut = state_ == State::Attack && lockedOn;
+  if (edge && !pushingOut) {
     if (state_ != State::EscapeReverse) {
       edgeSide_ = in.edgeLeft ? Side::Left : Side::Right;
       edgeBoth_ = false;
