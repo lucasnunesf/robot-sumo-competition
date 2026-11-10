@@ -1,0 +1,7 @@
+# host build output (tests and simulator)
+03-final/build/
+*.o
+strategy_test
+match_test
+config_test
+run_matches
