@@ -12,7 +12,7 @@ Firmware for an autonomous sumo robot, from my time competing in university robo
 
 | | |
 |---|---|
-| **Result** | A simulator built for this rewrite found an edge rule that was throwing away wins. After the fix, a still opponent is pushed out in 97% of simulated matches instead of 72%, and the robot never left the ring on its own in 6,000 matches |
+| **Result** | A simulator built for this rewrite found an edge rule that was throwing away wins. After the fix, a still opponent is pushed out in 97% of simulated matches instead of 72%, and the robot never left the ring on its own in 6,000 simulated matches. These are simulator results, not results from a real competition |
 | **My role** | I programmed the robot: manual control, sensors, start module and match strategy. This rewrite adds the module split, tests, simulator and CI |
 | **This repo** | Three standalone Arduino sketches that follow the robot from driving it by hand to a full match strategy, plus a test suite that runs on GitHub Actions |
 | **Skills** | C++17, embedded systems (ESP32), state machines, unit testing, simulation, GitHub Actions, measuring a change before shipping it |
