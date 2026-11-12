@@ -200,7 +200,6 @@ C++17 · ESP32 · Arduino (ESP32Servo, PS4Controller, IRremote) · Make · GitHu
 
 The problem, the business rules and the design decisions are mine. They come from programming this robot for university robotics competitions. I used an AI coding assistant to write the code faster and reviewed the result.
 
-<!-- Lucas: write here, in your own words, one or two sentences about where you saw this problem happen. -->
 
 ## Author
 
