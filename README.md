@@ -191,10 +191,8 @@ C++17 · ESP32 · Arduino (ESP32Servo, PS4Controller, IRremote) · Make · GitHu
 
 ## Next steps
 
-- [x] Tests that run on a PC, with CI
-- [x] A simulator to compare tactics and check changes
-- [ ] Tune the Flank and Counter timings on a real ring (their values in `config.h` are starting points)
-- [ ] Compile the Arduino sketches in CI as well
+- Tune the Flank and Counter timings on a real ring (their values in `config.h` are starting points)
+- Compile the Arduino sketches in CI as well
 
 ## How this was built
 
