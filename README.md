@@ -189,11 +189,6 @@ robot-sumo-competition/
 
 C++17 · ESP32 · Arduino (ESP32Servo, PS4Controller, IRremote) · Make · GitHub Actions
 
-## Next steps
-
-- Tune the Flank and Counter timings on a real ring (their values in `config.h` are starting points)
-- Compile the Arduino sketches in CI as well
-
 ## How this was built
 
 The problem, the business rules and the design decisions are mine. They come from programming this robot for university robotics competitions. I used an AI coding assistant to write the code faster and reviewed the result.
