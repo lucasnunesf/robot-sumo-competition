@@ -16,7 +16,7 @@ Firmware for an autonomous sumo robot, from my time competing in university robo
 | **My role** | I programmed the robot: manual control, sensors, start module and match strategy. This rewrite adds the module split, tests, simulator and CI |
 | **This repo** | Three standalone Arduino sketches that follow the robot from driving it by hand to a full match strategy, plus a test suite that runs on GitHub Actions |
 | **Skills** | C++17, embedded systems (ESP32), state machines, unit testing, simulation, GitHub Actions, measuring a change before shipping it |
-| **More** | [Portfolio](https://lucasnunesf.notion.site) |
+| **More** | [Portfolio](https://lucasnunesf.notion.site/Lucas-Nunes-Data-BI-Analyst-3de917c89c178092885cf639b619767b) |
 
 > **Why a rewrite?** The competition code was written to work by a deadline. Afterwards I went back through it to sharpen my C++ and to test the decisions I made under pressure. Projects 01 and 02 are rewrites of code that ran on the robot.
 
@@ -197,4 +197,4 @@ The problem, the business rules and the design decisions are mine. They come fro
 ## Author
 
 **Lucas Fernandes Nunes** · Data & BI Analyst · moving to Lisbon in February 2027
-[LinkedIn](https://linkedin.com/in/lucas-fernandes-nunes-335867256) · [Portfolio](https://lucasnunesf.notion.site)
+[LinkedIn](https://www.linkedin.com/in/lucasfernandesnunes) · [Portfolio](https://lucasnunesf.notion.site/Lucas-Nunes-Data-BI-Analyst-3de917c89c178092885cf639b619767b)
