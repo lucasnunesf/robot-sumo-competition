@@ -189,9 +189,9 @@ robot-sumo-competition/
 
 C++17 · ESP32 · Arduino (ESP32Servo, PS4Controller, IRremote) · Make · GitHub Actions
 
-## How this was built
+## Background
 
-The problem, the business rules and the design decisions are mine. They come from programming this robot for university robotics competitions. I used an AI coding assistant to write the code faster and reviewed the result.
+The problem, the business rules and the design decisions are mine. They come from programming this robot for university robotics competitions.
 
 
 ## Author
