@@ -1,6 +1,6 @@
 # 03 · Final
 
-The complete firmware, split into modules, with three selectable tactics and a strategy that is unit-tested on a PC.
+The complete firmware, split into modules, with three selectable tactics and a strategy that also runs in a ring simulator on a PC.
 
 ## Code structure
 
@@ -12,11 +12,10 @@ The complete firmware, split into modules, with three selectable tactics and a s
 | `Sensors.*`    | Edge and opponent sensors, with calibration                         |
 | `StartModule.*`| Decodes the IR start module into `Ready` / `Start` / `Stop`         |
 | `Strategy.*`   | Match logic as a state machine, with no hardware access             |
-| `test/`        | Config, strategy and match tests that run on a PC                   |
 | `sim/`         | 2D ring simulator that plays whole matches with the real strategy   |
-| `Makefile`     | `make test` and `make sim`, no Arduino needed                       |
+| `Makefile`     | `make sim`, no Arduino needed                                       |
 
-The key design choice is that `Strategy` never touches the hardware. It receives a `SensorReadings` struct and the current time, and returns a `MotorCommand`. The whole match logic can therefore be tested without the robot, and the hardware modules stay small.
+The key design choice is that `Strategy` never touches the hardware. It receives a `SensorReadings` struct and the current time, and returns a `MotorCommand`. The whole match logic can therefore run in the simulator without the robot, and the hardware modules stay small.
 
 ## Tactics
 
@@ -56,18 +55,13 @@ On every update the priority is **stay in the ring → attack → search**.
 
 All timing uses `millis()` with unsigned subtraction, so it stays correct when the counter wraps around. There are no blocking delays during a match.
 
-## Tests
+## Simulator
 
 ```bash
-make test   # config checks, strategy unit tests, simulated matches
 make sim    # 1,000 simulated matches per tactic and opponent
 ```
 
-- `test/config_test.cpp`: 12 compile-time rules on `config.h` (ESC range, directions, pins, timings)
-- `test/strategy_test.cpp`: 41 checks on each opening plan, the Counter waiting time, attack steering, edge priority and its push-through exception, the escape sequence, restarting a match and `millis()` wrap-around
-- `test/match_test.cpp`: whole matches in the simulator, with fixed seeds
-
-All three run on every push with GitHub Actions. The root README has the simulator results.
+The root README has the results.
 
 ## Tuning
 
